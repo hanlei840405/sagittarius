@@ -1,0 +1,14 @@
+package com.galaxy.framework.sagittarius.feign;
+
+import com.galaxy.framework.pisces.vo.capricorn.FloorVo;
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@FeignClient(value = "basic", fallback = FloorHystrix.class)
+public interface FloorFeign {
+
+    @RequestMapping(value = "/floor/code", method = RequestMethod.GET)
+    FloorVo getByCode(@RequestParam(value = "code") String code);
+}

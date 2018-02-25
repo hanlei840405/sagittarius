@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.galaxy.framework.sagittarius.mapper.LeaseHouseContractMapper">
+  <resultMap id="BaseResultMap" type="com.galaxy.framework.sagittarius.entity.LeaseHouseContract">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="owner_id" jdbcType="VARCHAR" property="ownerId" />
+    <result column="owner_name" jdbcType="VARCHAR" property="ownerName" />
+    <result column="owner_phone" jdbcType="VARCHAR" property="ownerPhone" />
+    <result column="house_code" jdbcType="VARCHAR" property="houseCode" />
+    <result column="house_name" jdbcType="VARCHAR" property="houseName" />
+    <result column="house_descr" jdbcType="VARCHAR" property="houseDescr" />
+    <result column="house_acreage" jdbcType="DECIMAL" property="houseAcreage" />
+    <result column="house_public_area" jdbcType="DECIMAL" property="housePublicArea" />
+    <result column="house_rent" jdbcType="DECIMAL" property="houseRent" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="period_amount" jdbcType="DECIMAL" property="periodAmount" />
+    <result column="deposit" jdbcType="DECIMAL" property="deposit" />
+    <result column="payment" jdbcType="DECIMAL" property="payment" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="pay_mode" jdbcType="VARCHAR" property="payMode" />
+    <result column="settlement_period" jdbcType="VARCHAR" property="settlementPeriod" />
+    <result column="service_from" jdbcType="DATE" property="serviceFrom" />
+    <result column="service_to" jdbcType="DATE" property="serviceTo" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    <result column="version" jdbcType="TINYINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, name, owner_id, owner_name, owner_phone, house_code, house_name, house_descr, 
+    house_acreage, house_public_area, house_rent, amount, period_amount, deposit, payment, discount, pay_mode,
+    settlement_period, service_from, service_to, status, creator, created, modifier, 
+    modified, version
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from operation_lease_house_contract
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from operation_lease_house_contract
+    where code = #{code}
+  </select>
+  <select id="getByHouseInUsed" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from operation_lease_house_contract
+    where house_code = #{houseCode} AND status='有效'
+  </select>
+  <select id="findAll" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from operation_lease_house_contract
+    where 1=1
+    <if test="code != null">
+      AND code = #{code,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null">
+      AND name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="ownerId != null">
+      AND owner_id = #{ownerId,jdbcType=VARCHAR}
+    </if>
+    <if test="ownerName != null">
+      AND owner_name = #{ownerName,jdbcType=VARCHAR}
+    </if>
+    <if test="ownerPhone != null">
+      AND owner_phone = #{ownerPhone,jdbcType=VARCHAR}
+    </if>
+    <if test="houseCode != null">
+      AND house_code = #{houseCode,jdbcType=VARCHAR}
+    </if>
+    <if test="houseName != null">
+      AND house_name = #{houseName,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null">
+      AND status = #{status,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from operation_lease_house_contract
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.galaxy.framework.sagittarius.entity.LeaseHouseContract">
+    insert into operation_lease_house_contract (id, code, name, 
+      owner_id, owner_name, owner_phone, 
+      house_code, house_name, house_descr, 
+      house_acreage, house_public_area, house_rent, 
+      amount, period_amount, deposit, payment, discount,
+      pay_mode, settlement_period, service_from, 
+      service_to, status, creator, 
+      created, modifier, modified, 
+      version)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{ownerId,jdbcType=VARCHAR}, #{ownerName,jdbcType=VARCHAR}, #{ownerPhone,jdbcType=VARCHAR}, 
+      #{houseCode,jdbcType=VARCHAR}, #{houseName,jdbcType=VARCHAR}, #{houseDescr,jdbcType=VARCHAR}, 
+      #{houseAcreage,jdbcType=DECIMAL}, #{housePublicArea,jdbcType=DECIMAL}, #{houseRent,jdbcType=DECIMAL}, 
+      #{amount,jdbcType=DECIMAL}, #{periodAmount,jdbcType=DECIMAL}, #{deposit,jdbcType=DECIMAL}, #{payment,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL},
+      #{payMode,jdbcType=VARCHAR}, #{settlementPeriod,jdbcType=VARCHAR}, #{serviceFrom,jdbcType=DATE}, 
+      #{serviceTo,jdbcType=DATE}, #{status,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{modified,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.galaxy.framework.sagittarius.entity.LeaseHouseContract">
+    insert into operation_lease_house_contract
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="ownerId != null">
+        owner_id,
+      </if>
+      <if test="ownerName != null">
+        owner_name,
+      </if>
+      <if test="ownerPhone != null">
+        owner_phone,
+      </if>
+      <if test="houseCode != null">
+        house_code,
+      </if>
+      <if test="houseName != null">
+        house_name,
+      </if>
+      <if test="houseDescr != null">
+        house_descr,
+      </if>
+      <if test="houseAcreage != null">
+        house_acreage,
+      </if>
+      <if test="housePublicArea != null">
+        house_public_area,
+      </if>
+      <if test="houseRent != null">
+        house_rent,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="periodAmount != null">
+        period_amount,
+      </if>
+      <if test="deposit != null">
+          deposit,
+      </if>
+      <if test="payment != null">
+        payment,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="payMode != null">
+        pay_mode,
+      </if>
+      <if test="settlementPeriod != null">
+        settlement_period,
+      </if>
+      <if test="serviceFrom != null">
+        service_from,
+      </if>
+      <if test="serviceTo != null">
+        service_to,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="modified != null">
+        modified,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        #{ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null">
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerPhone != null">
+        #{ownerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCode != null">
+        #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="houseName != null">
+        #{houseName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseDescr != null">
+        #{houseDescr,jdbcType=VARCHAR},
+      </if>
+      <if test="houseAcreage != null">
+        #{houseAcreage,jdbcType=DECIMAL},
+      </if>
+      <if test="housePublicArea != null">
+        #{housePublicArea,jdbcType=DECIMAL},
+      </if>
+      <if test="houseRent != null">
+        #{houseRent,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="periodAmount != null">
+        #{periodAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="deposit != null">
+        #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test="payment != null">
+        #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementPeriod != null">
+        #{settlementPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFrom != null">
+        #{serviceFrom,jdbcType=DATE},
+      </if>
+      <if test="serviceTo != null">
+        #{serviceTo,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modified != null">
+        #{modified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.galaxy.framework.sagittarius.entity.LeaseHouseContract">
+    update operation_lease_house_contract
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        owner_id = #{ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null">
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerPhone != null">
+        owner_phone = #{ownerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCode != null">
+        house_code = #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="houseName != null">
+        house_name = #{houseName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseDescr != null">
+        house_descr = #{houseDescr,jdbcType=VARCHAR},
+      </if>
+      <if test="houseAcreage != null">
+        house_acreage = #{houseAcreage,jdbcType=DECIMAL},
+      </if>
+      <if test="housePublicArea != null">
+        house_public_area = #{housePublicArea,jdbcType=DECIMAL},
+      </if>
+      <if test="houseRent != null">
+        house_rent = #{houseRent,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="periodAmount != null">
+        period_amount = #{periodAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="deposit != null">
+          deposit = #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test="payment != null">
+        payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        pay_mode = #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementPeriod != null">
+        settlement_period = #{settlementPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFrom != null">
+        service_from = #{serviceFrom,jdbcType=DATE},
+      </if>
+      <if test="serviceTo != null">
+        service_to = #{serviceTo,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modified != null">
+        modified = #{modified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.galaxy.framework.sagittarius.entity.LeaseHouseContract">
+    update operation_lease_house_contract
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      owner_id = #{ownerId,jdbcType=VARCHAR},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      owner_phone = #{ownerPhone,jdbcType=VARCHAR},
+      house_code = #{houseCode,jdbcType=VARCHAR},
+      house_name = #{houseName,jdbcType=VARCHAR},
+      house_descr = #{houseDescr,jdbcType=VARCHAR},
+      house_acreage = #{houseAcreage,jdbcType=DECIMAL},
+      house_public_area = #{housePublicArea,jdbcType=DECIMAL},
+      house_rent = #{houseRent,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=DECIMAL},
+      period_amount = #{periodAmount,jdbcType=DECIMAL},
+      deposit = #{deposit,jdbcType=DECIMAL},
+      payment = #{payment,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DECIMAL},
+      pay_mode = #{payMode,jdbcType=VARCHAR},
+      settlement_period = #{settlementPeriod,jdbcType=VARCHAR},
+      service_from = #{serviceFrom,jdbcType=DATE},
+      service_to = #{serviceTo,jdbcType=DATE},
+      status = #{status,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      modified = #{modified,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
